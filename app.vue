@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import type {Wallet} from "~/interfaces/wallet.interface";
+import type {NavItem} from '@nuxt/content'
+import type {Ref} from "vue";
+import {mapContentNavigation} from "#ui-pro/modules/pro/runtime/utils/content";
+
+const navigation = inject<Ref<NavItem[]>>('navigation', ref([]))
 
 async function getWalletBalance() {
   const {data, error} = await useFetch('/api/bscscan/tokenbalance')
