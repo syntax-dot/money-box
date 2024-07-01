@@ -2,7 +2,7 @@
 import type {Wallet} from "~/interfaces/wallet.interface";
 
 async function getWalletBalance() {
-  const { data, error } = await useFetch('/api/bscscan/tokenbalance')
+  const {data, error} = await useFetch('/api/bscscan/tokenbalance')
   console.log('data', data)
 }
 
@@ -15,20 +15,30 @@ async function onAddUserData() {
     targetBalance: 31
   }
 
-  const { data, error } = await useFetch('/api/wallet/create', {
+  const {data, error} = await useFetch('/api/wallet/create', {
     method: 'POST',
     body: initialWalletData,
   })
 }
 </script>
 <template>
-  <UHeader />
+  <UHeader title="links">
+    <template #logo>
+      <UIcon name="i-ph-rocket-launch" dynamic/>
+    </template>
+
+    <template #right>
+      <UColorModeButton/>
+    </template>
+
+    <template #panel>
+      <UNavigationTree :links="mapContentNavigation(navigation)"/>
+    </template>
+  </UHeader>
 
   <UMain>
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage/>
     </NuxtLayout>
   </UMain>
-
-  <UFooter />
 </template>
