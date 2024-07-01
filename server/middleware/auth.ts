@@ -1,3 +1,14 @@
 export default defineEventHandler((event) => {
-    event.context.auth = { user: 123 }
+    const { mongo } = useRuntimeConfig(event).auth
+
+    const { url } = event.node.req
+
+    mongo.exclude.forEach((item: string) => {
+        if (`/api/auth/${item}` === url) {
+            throw createError({
+                statusCode: 404,
+                statusMessage: `Page not found: ${url}`
+            })
+        }
+    })
 })
