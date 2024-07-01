@@ -1,7 +1,8 @@
 import { defineMongooseModel } from "#nuxt/mongoose";
+import type {Wallet} from "~/interfaces/wallet.interface";
 
-export const UserData = defineMongooseModel({
-    name: 'UserData',
+export const WalletSchema = defineMongooseModel<Wallet>({
+    name: 'WalletSchema',
     schema: {
         address: {
             type: String,
@@ -9,14 +10,14 @@ export const UserData = defineMongooseModel({
             unique: true,
         },
         balance: {
-            type: String,
+            type: Number,
             required: true,
         },
         targetBalance: {
-            type: String,
+            type: Number,
             required: true,
         },
-        target: {
+        description: {
             type: String,
             required: true,
         },

@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import {UserData} from "~/server/models/user-data.model";
-import UserDataGet from "~/server/api/user-data.get";
+import type {Wallet} from "~/interfaces/wallet.interface";
 
-const { data } = await useFetch('/api/hello')
+const { data } = await useFetch('/api/wallet/')
 
 async function onAddUserData() {
-
-  await UserData.shema
+  const initialWalletData: Wallet = {
+    address: 'aboba',
+    autoupdate: false,
+    balance: 0,
+    description: 'коплю',
+    targetBalance: 31
+  }
 }
 </script>
 <template>
@@ -14,6 +18,7 @@ async function onAddUserData() {
     <div @click="">
       add
     </div>
+    {{data}}
     <NuxtRouteAnnouncer />
     <NuxtWelcome />
   </div>
