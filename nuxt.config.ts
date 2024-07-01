@@ -3,5 +3,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     'nuxt-mongoose',
+    './modules/auth.module',
   ],
 })

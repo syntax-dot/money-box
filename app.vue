@@ -11,6 +11,11 @@ async function onAddUserData() {
     description: 'коплю',
     targetBalance: 31
   }
+
+  const { data, error } = await useFetch('/api/wallet/create', {
+    method: 'POST',
+    body: initialWalletData,
+  })
 }
 </script>
 <template>
