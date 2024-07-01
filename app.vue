@@ -20,7 +20,7 @@ async function onAddUserData() {
 </script>
 <template>
   <div>
-    <div @click="">
+    <div @click="onAddUserData">
       add
     </div>
     {{data}}
