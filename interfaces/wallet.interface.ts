@@ -1,7 +1,7 @@
 import type {ObjectId} from "mongoose";
 
 export interface Wallet {
-    _id: ObjectId
+    _id?: ObjectId
     address: string;
     balance: number;
     targetBalance: number;

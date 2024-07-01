@@ -2,7 +2,7 @@ import { defineNuxtModule, logger } from '@nuxt/kit'
 import { sha256 } from 'ohash'
 import { defu } from 'defu'
 
-type Routes = ['login', 'register', 'logout', 'me']
+type Routes = ['login', 'admin']
 
 export interface ModuleOptions {
     secret: string

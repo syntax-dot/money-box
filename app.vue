@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type {Wallet} from "~/interfaces/wallet.interface";
 
-const { data } = await useFetch('/api/wallet/')
+async function getWalletBalance() {
+  const { data, error } = await useFetch('/api/bscscan/tokenbalance')
+  console.log('data', data)
+}
 
 async function onAddUserData() {
   const initialWalletData: Wallet = {
@@ -19,12 +22,13 @@ async function onAddUserData() {
 }
 </script>
 <template>
-  <div>
-    <div @click="onAddUserData">
-      add
-    </div>
-    {{data}}
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <UHeader />
+
+  <UMain>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </UMain>
+
+  <UFooter />
 </template>
