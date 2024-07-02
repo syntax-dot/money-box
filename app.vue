@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import type {Wallet} from "~/interfaces/wallet.interface";
-import type {NavItem} from '@nuxt/content'
-import type {Ref} from "vue";
 import {mapContentNavigation} from "#ui-pro/modules/pro/runtime/utils/content";
+import type {NavItem} from "@nuxt/content";
 
-const navigation = inject<Ref<NavItem[]>>('navigation', ref([]))
+const navigation = ref<NavItem[]>([
+  {
+    title: 'Login',
+    _path: '/login'
+  }, {
+    title: 'Admin',
+    _path: '/admin'
+  },
+]);
 
 async function getWalletBalance() {
   const {data, error} = await useFetch('/api/bscscan/tokenbalance')
@@ -30,6 +37,7 @@ async function onAddUserData() {
   <UHeader title="links">
     <template #logo>
       <UIcon name="i-ph-rocket-launch" dynamic/>
+      Копилка
     </template>
 
     <template #right>
