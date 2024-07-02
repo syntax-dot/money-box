@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {FormError} from '#ui/types'
-import type {UserData} from "~/interfaces";
+import type {User} from "~/interfaces";
 
 const fields = [
   {
@@ -24,7 +24,7 @@ const validate = (state: any) => {
   return errors
 }
 
-function onSubmit(data: UserData) {
+function onSubmit(data: User) {
   const {email} = data
   console.log('data', data)
   sessionStorage.setItem('user', email);

@@ -1,7 +1,7 @@
 import {defineMongooseModel} from '#nuxt/mongoose'
-import {UserData} from "~/interfaces";
+import {User} from "~/interfaces";
 
-export const UserSchema = defineMongooseModel<UserData>({
+export const UserSchema = defineMongooseModel<User>({
     name: 'User',
     schema: {
         email: {
