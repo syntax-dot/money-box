@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type {Wallet} from "~/interfaces/wallet.interface";
 import {mapContentNavigation} from "#ui-pro/modules/pro/runtime/utils/content";
 import type {NavItem} from "@nuxt/content";
+import type {Wallet} from "~/interfaces";
 
 const navigation = ref<NavItem[]>([
   {

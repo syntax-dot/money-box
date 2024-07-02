@@ -1,11 +1,10 @@
-import {WalletSchema} from "~/server/models/user-data.model";
+import {WalletSchema} from "~/server/models/wallet.schema";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     try {
         return await new WalletSchema(body).save()
-    }
-    catch (error) {
+    } catch (error) {
         return error
     }
 })

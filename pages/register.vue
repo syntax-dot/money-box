@@ -25,7 +25,9 @@ const validate = (state: any) => {
 }
 
 function onSubmit(data: UserData) {
-  console.log('Submitted', data)
+  const {email} = data
+  console.log('data', data)
+  sessionStorage.setItem('user', email);
 }
 </script>
 
@@ -35,15 +37,15 @@ function onSubmit(data: UserData) {
       <UAuthForm
           :fields="fields"
           :validate="validate"
-          title="Login"
+          title="Register"
           align="top"
-          icon="i-heroicons-lock-closed"
+          icon="i-heroicons-user-circle"
           :ui="{ base: 'text-center', footer: 'text-center' }"
           @submit="onSubmit"
       >
         <template #description>
-          Don't have an account?
-          <NuxtLink to="/register" class="text-primary font-medium">Sign up</NuxtLink>
+          Do you have an account?
+          <NuxtLink to="/login" class="text-primary font-medium">Login</NuxtLink>
         </template>
       </UAuthForm>
     </UCard>
