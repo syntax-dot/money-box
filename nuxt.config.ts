@@ -4,6 +4,12 @@ export default defineNuxtConfig({
         '@nuxt/ui-pro',
     ],
 
+    runtimeConfig: {
+        public: {
+            DEFAULT_ADDRESS: process.env['DEFAULT_ADDRESS']
+        }
+    },
+
     devtools: {enabled: true},
     modules: ['nuxt-mongoose', './modules/auth.module', "@nuxt/ui"],
 

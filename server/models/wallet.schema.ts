@@ -12,7 +12,6 @@ export const WalletSchema = defineMongooseModel<Wallet>({
         },
         user: {
             type: Types.ObjectId,
-            required: true,
             ref: 'User',
         },
         balance: {
