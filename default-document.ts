@@ -1,7 +1,7 @@
 import type {Wallet} from "~/interfaces";
 
 export const defaultWalletData: Wallet = {
-    _id: '123123',
+    _id: 'example',
     address: process.env.DEFAULT_ADDRESS as string,
     autoupdate: false,
     balance: 0,
