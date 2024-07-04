@@ -32,7 +32,7 @@ function onSubmit(data: User) {
 </script>
 
 <template>
-  <UPage class="flex items-center justify-center py-16">
+  <div class="flex items-center justify-center py-16">
     <UCard class="max-w-sm w-full">
       <UAuthForm
           :fields="fields"
@@ -49,7 +49,7 @@ function onSubmit(data: User) {
         </template>
       </UAuthForm>
     </UCard>
-  </UPage>
+  </div>
 </template>
 
 <style scoped>

@@ -2,6 +2,7 @@
 import {mapContentNavigation} from "#ui-pro/modules/pro/runtime/utils/content";
 import type {NavItem} from "@nuxt/content";
 import type {Wallet} from "~/interfaces";
+import {useAuth} from "~/composables/use-auth";
 
 const navigation = ref<NavItem[]>([
   {
@@ -12,6 +13,9 @@ const navigation = ref<NavItem[]>([
     _path: '/admin'
   },
 ]);
+
+const {loggedIn, user, clear} = useAuth()
+
 
 async function getWalletBalance() {
   const {data, error} = await useFetch('/api/bscscan/tokenbalance')
@@ -32,12 +36,26 @@ async function onAddUserData() {
     body: initialWalletData,
   })
 }
+
+const links = [{
+  label: 'Home',
+  to: '/'
+}, {
+  label: 'Login',
+  to: '/login'
+}, {
+  label: 'Admin',
+  to: '/admin'
+}]
 </script>
 <template>
-  <UHeader title="links">
+  <UHeader :links="links">
     <template #logo>
-      <UIcon name="i-ph-rocket-launch" dynamic/>
-      Копилка
+      <div class="flex items-center gap-4">
+        <UIcon name="i-ph-rocket-launch" dynamic/>
+        Копилка
+      </div>
+
     </template>
 
     <template #right>
