@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {FormError} from '#ui/types'
 import type {User} from "~/interfaces";
+import {userAuthInjectable} from "~/composables/use-auth.injectable";
 
 const fields = [
   {
@@ -17,6 +18,8 @@ const fields = [
   }
 ]
 
+const {user} = userAuthInjectable.inject()
+
 const validate = (state: any) => {
   const errors: FormError[] = []
   if (!state.email) errors.push({path: 'email', message: 'Email is required'})
@@ -25,7 +28,8 @@ const validate = (state: any) => {
 }
 
 function onSubmit(data: User) {
-  console.log('Submitted', data)
+  user.value = data.email
+  navigateTo('/')
 }
 </script>
 

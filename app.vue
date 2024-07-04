@@ -2,7 +2,7 @@
 import {mapContentNavigation} from "#ui-pro/modules/pro/runtime/utils/content";
 import type {NavItem} from "@nuxt/content";
 import type {Wallet} from "~/interfaces";
-import {useAuth} from "~/composables/use-auth";
+import {userAuthInjectable} from "~/composables/use-auth.injectable";
 
 const navigation = ref<NavItem[]>([
   {
@@ -14,8 +14,7 @@ const navigation = ref<NavItem[]>([
   },
 ]);
 
-const {loggedIn, user, clear} = useAuth()
-
+const {user, logout, loggedIn} = userAuthInjectable.provide()
 
 async function getWalletBalance() {
   const {data, error} = await useFetch('/api/bscscan/tokenbalance')
@@ -37,29 +36,41 @@ async function onAddUserData() {
   })
 }
 
-const links = [{
-  label: 'Home',
-  to: '/'
-}, {
-  label: 'Login',
-  to: '/login'
-}, {
-  label: 'Admin',
-  to: '/admin'
-}]
+const links = [
+  {
+    label: 'Home',
+    to: '/'
+  }
+]
+
+function onClick() {
+  if (loggedIn.value && user.value) {
+    logout()
+  }
+  navigateTo('/login')
+}
+
+
 </script>
 <template>
   <UHeader :links="links">
     <template #logo>
       <div class="flex items-center gap-4">
         <UIcon name="i-ph-rocket-launch" dynamic/>
-        Копилка
+        Money-box
       </div>
 
     </template>
 
     <template #right>
       <UColorModeButton/>
+      <ClientOnly>
+        <UButton @click="onClick"
+                 :label="loggedIn ? 'Logout' : 'Login'"
+                 :color="loggedIn ? 'red' : 'primary'"
+                 :icon="`i-heroicons-arrow-${loggedIn ? 'left-start-on-rectangle' : 'left-end-on-rectangle'}`"
+        />
+      </ClientOnly>
     </template>
 
     <template #panel>

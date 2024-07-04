@@ -1,10 +1,14 @@
 <script setup lang="ts">
 
 import type {Wallet} from "~/interfaces";
+import {useAuth} from "~/composables/use-auth";
 
 const isAutoUpdate = ref(false)
 const isLoadingBalance = ref(false)
 const balance = ref<Wallet | null>(null)
+
+const {loggedIn} = useAuth()
+
 
 let updateBalanceInterval: NodeJS.Timeout | null = null
 
@@ -36,38 +40,45 @@ balance.value = await getWalletBalance() ?? null
 </script>
 
 <template>
-  <div class="p-4">
-    <UCard>
-      <template #header>
-        <h2 class="font-bold">
+  <div class="p-4 flex flex-col items-center">
+    <UDashboardCard v-if="!loggedIn"
+                    title="Example"
+                    description="Example money box"
+                    :links="[{ click: () => navigateTo('wallet/example'), label: 'Open', color: 'gray', trailingIcon: 'i-heroicons-arrow-right-20-solid' }]"
+    />
+    <div style="max-width: 600px">
+      <UCard>
+        <template #header>
+          <h2 class="font-bold">
+            aboba
+          </h2>
+        </template>
+
+        <div>
           aboba
-        </h2>
-      </template>
-
-      <div>
-        aboba
-      </div>
-
-      <template #footer>
-        <div class="flex flex-row items-center gap-4">
-
-          Autoupdate:
-          <UToggle
-              :disabled="!isAutoUpdate && isLoadingBalance"
-              size="xl"
-              v-model="isAutoUpdate"
-          />
-
-          <UButton
-              v-if="!isAutoUpdate"
-              @click="getWalletBalance"
-              :loading="isLoadingBalance"
-              icon="i-heroicons-arrow-path"
-              label="Refresh"
-          />
         </div>
-      </template>
-    </UCard>
+
+        <template #footer>
+          <div class="flex flex-row items-center gap-4">
+
+            Autoupdate:
+            <UToggle
+                :disabled="!isAutoUpdate && isLoadingBalance"
+                size="xl"
+                v-model="isAutoUpdate"
+            />
+
+            <UButton
+                v-if="!isAutoUpdate"
+                @click="getWalletBalance"
+                :loading="isLoadingBalance"
+                icon="i-heroicons-arrow-path"
+                label="Refresh"
+            />
+          </div>
+        </template>
+      </UCard>
+    </div>
   </div>
 
 </template>
