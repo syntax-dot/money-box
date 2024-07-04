@@ -50,6 +50,7 @@ function onClick() {
   navigateTo('/login')
 }
 
+const loginButtonIcon = computed(() => `i-heroicons-arrow-${loggedIn.value ? 'left-start-on-rectangle' : 'left-end-on-rectangle'}`)
 
 </script>
 <template>
@@ -58,19 +59,18 @@ function onClick() {
       <div class="flex items-center gap-4">
         <UIcon name="i-ph-rocket-launch" dynamic/>
         Money-box
+        {{ user }}
       </div>
 
     </template>
 
     <template #right>
       <UColorModeButton/>
-      <ClientOnly>
-        <UButton @click="onClick"
-                 :label="loggedIn ? 'Logout' : 'Login'"
-                 :color="loggedIn ? 'red' : 'primary'"
-                 :icon="`i-heroicons-arrow-${loggedIn ? 'left-start-on-rectangle' : 'left-end-on-rectangle'}`"
-        />
-      </ClientOnly>
+      <UButton @click="onClick"
+               :label="loggedIn ? 'Logout' : 'Login'"
+               :color="loggedIn ? 'red' : 'primary'"
+               :icon="loginButtonIcon"
+      />
     </template>
 
     <template #panel>

@@ -1,7 +1,7 @@
-import {useAuth} from "~/composables/use-auth";
+import {userAuthInjectable} from "~/composables/use-auth.injectable";
 
 export default defineNuxtRouteMiddleware(() => {
-    const {loggedIn} = useAuth()
-    
+    const {loggedIn} = userAuthInjectable.inject()
+
     if (!loggedIn.value) return navigateTo('/login')
 })

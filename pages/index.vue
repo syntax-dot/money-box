@@ -1,14 +1,13 @@
 <script setup lang="ts">
 
 import type {Wallet} from "~/interfaces";
-import {useAuth} from "~/composables/use-auth";
+import {userAuthInjectable} from "~/composables/use-auth.injectable";
 
 const isAutoUpdate = ref(false)
 const isLoadingBalance = ref(false)
 const balance = ref<Wallet | null>(null)
 
-const {loggedIn} = useAuth()
-
+const {loggedIn} = userAuthInjectable.inject()
 
 let updateBalanceInterval: NodeJS.Timeout | null = null
 
