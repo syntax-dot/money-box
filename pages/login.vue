@@ -19,6 +19,8 @@ const fields = [
 ]
 
 const {user} = userAuthInjectable.inject()
+const {me} = useA()
+
 
 const validate = (state: any) => {
   const errors: FormError[] = []
@@ -27,31 +29,22 @@ const validate = (state: any) => {
   return errors
 }
 
-function onSubmit(data: User) {
-  user.value = data.email
-  navigateTo('/')
+async function onSubmit(data: User) {
+  try {
+    const res = await $fetch('/api/auth/login', {method: 'POST', body: data})
+    if (res.loggedIn) {
+      await me()
+      user.value = data.email
+      navigateTo('/')
+    }
+  } catch (error: any) {
+    console.error(`Login failed: ${error.message}`)
+  }
 }
 </script>
 
 <template>
-  <div class="flex items-center justify-center py-16">
-    <UCard class="max-w-sm w-full">
-      <UAuthForm
-          :fields="fields"
-          :validate="validate"
-          title="Login"
-          align="top"
-          icon="i-heroicons-lock-closed"
-          :ui="{ base: 'text-center', footer: 'text-center' }"
-          @submit="onSubmit"
-      >
-        <template #description>
-          Don't have an account?
-          <NuxtLink to="/register" class="text-primary font-medium">Sign up</NuxtLink>
-        </template>
-      </UAuthForm>
-    </UCard>
-  </div>
+  <AuthForm mode="login" @submit="onSubmit"/>
 </template>
 
 <style scoped>

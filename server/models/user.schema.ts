@@ -20,7 +20,7 @@ export const UserSchema = defineMongooseModel<User>({
 
             throw createError({
                 statusCode: 500,
-                statusMessage: 'validation failed',
+                statusMessage: 'Validation failed',
             })
         })
     },
