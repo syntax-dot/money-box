@@ -38,12 +38,6 @@ async function getEnsureWalletData() {
   console.log('getEnsureWalletData data:', data.value)
 }
 
-const links = [
-  {
-    label: 'Home',
-    to: '/'
-  }
-]
 
 function onClick() {
   if (loggedIn.value && user.value) {
@@ -54,7 +48,27 @@ function onClick() {
 
 onMounted(getEnsureWalletData)
 
-const loginButtonIcon = computed(() => `i-heroicons-arrow-${loggedIn.value ? 'left-start-on-rectangle' : 'left-end-on-rectangle'}`)
+const links = computed(() => {
+  return [
+    {
+      label: 'Home',
+      to: '/'
+    },
+    loggedIn
+        ? {
+          label: 'Admin',
+          to: '/admin'
+        }
+        : {}
+  ]
+})
+
+
+const loginButtonIcon = computed(() => {
+  return loggedIn.value
+      ? 'i-heroicons-arrow-left-start-on-rectangle'
+      : 'i-heroicons-arrow-left-end-on-rectangle'
+})
 
 </script>
 <template>
