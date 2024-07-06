@@ -1,7 +1,7 @@
 import type {H3Event} from 'h3'
 
 export async function getAuth(event: H3Event) {
-    return (await _useSession(event)).data.email
+    return (await _useSession(event)).data
 }
 
 export async function setAuth(event: H3Event, email: string) {

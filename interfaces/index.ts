@@ -16,3 +16,7 @@ export interface Wallet {
     description: string;
     autoupdate: boolean;
 }
+
+export interface AuthPayload {
+    email?: string
+}

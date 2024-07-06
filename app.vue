@@ -16,6 +16,8 @@ const navigation = ref<NavItem[]>([
 
 const {user, logout, loggedIn} = userAuthInjectable.provide()
 const runtimeConfig = useRuntimeConfig()
+const {me, user: asd, loggedIn: qwe} = useA()
+
 
 async function getWalletBalance() {
   const {data, error} = await useFetch('/api/bscscan/tokenbalance')
@@ -34,8 +36,9 @@ async function getEnsureWalletData() {
   const {data, error} = await useFetch<Wallet[]>('/api/wallet/ensure', {
     method: 'GET',
   })
-
   console.log('getEnsureWalletData data:', data.value)
+  console.log('user:', asd)
+  console.log('loggedIn:', qwe)
 }
 
 

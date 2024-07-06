@@ -1,4 +1,5 @@
 import type {H3Event} from 'h3'
+import {AuthPayload} from "~/interfaces";
 
 const {mongo} = useRuntimeConfig().auth
 
@@ -7,10 +8,11 @@ export async function _useSession(event: H3Event, email?: string) {
         password: mongo.secret,
         name: 'authorization',
     })
+
     if (email)
         await session.update({email})
     return {
         ...session,
-        data: session.data
+        data: session.data as AuthPayload
     }
 }

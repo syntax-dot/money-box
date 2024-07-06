@@ -14,6 +14,8 @@ export default defineEventHandler(async (event) => {
 
     const user = await mongoose.connection.db.collection('users').findOne({email})
 
+    console.log('user', user)
+
     if (!user) {
         throw createError({
             statusMessage: errorMessage,

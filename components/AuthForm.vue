@@ -3,6 +3,7 @@ import type {User} from "~/interfaces";
 import {type InferType, object, string} from 'yup'
 import {capitalize} from "@vue/shared";
 import type {FormSubmitEvent} from "#ui/types";
+import {userAuthInjectable} from "~/composables/use-auth.injectable";
 
 interface AuthFormProps {
   mode: 'login' | 'register'
@@ -35,7 +36,10 @@ const dataByMode = {
 }
 
 const emit = defineEmits<AuthFormEmits>()
-defineProps<AuthFormProps>()
+const props = defineProps<AuthFormProps>()
+
+const {me} = useA()
+const {user: sessionUser} = userAuthInjectable.inject()
 
 const user = reactive({
   email: '',
@@ -43,9 +47,31 @@ const user = reactive({
 })
 
 const isShowPassword = ref(false)
+const errorMessage = ref<string | null>(null)
+
+const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  emit('submit', event.data satisfies User)
+  const {data} = event
+
+  if (!schema.isValidSync(data)) {
+    return
+  }
+
+  try {
+    const res = await $fetch(`/api/auth/${props.mode}`, {method: 'POST', body: data})
+    if (res) {
+      await me()
+      sessionUser.value = data.email
+      emit('submit', event.data satisfies User)
+      navigateTo('/')
+    }
+  } catch (error: any) {
+    console.error(`Login failed: ${error.message}`)
+    errorMessage.value = error.message
+    await wait(5000)
+    errorMessage.value = null
+  }
 }
 </script>
 
@@ -94,6 +120,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             :label="capitalize(mode)"
             type="submit"
         />
+        <div class="text-red-500" v-if="errorMessage">
+          {{ errorMessage }}
+        </div>
       </UForm>
     </UCard>
   </div>

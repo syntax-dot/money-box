@@ -1,4 +1,6 @@
-const useUserSessionState = () => useState<{ email: string }>('nuxt-mongoose-auth', () => ({}))
+import type {AuthPayload} from "~/interfaces";
+
+const useUserSessionState = () => useState<AuthPayload>('nuxt-mongoose-auth', () => ({}))
 
 export function useA() {
     const sessionState = useUserSessionState()
@@ -9,11 +11,7 @@ export function useA() {
     }
 
     async function me() {
-        useUserSessionState().value = await useRequestFetch()('/api/auth/me', {
-            headers: {
-                Accept: 'text/json'
-            }
-        })
+        useUserSessionState().value = await useRequestFetch()('/api/auth/me')
     }
 
     return {
