@@ -3,8 +3,8 @@ import {WalletSchema} from "~/server/models/wallet.schema";
 
 export default defineEventHandler(async (event) => {
     try {
-        const email = sessionStorage.getItem('user')
-      
+        const {email} = await requireAuth(event)
+
         const user = await UserSchema.findOne({email})
         if (!user)
             return

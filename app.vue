@@ -14,9 +14,9 @@ const navigation = ref<NavItem[]>([
   },
 ]);
 
-const {user, logout, loggedIn} = userAuthInjectable.provide()
+const {user} = userAuthInjectable.provide()
 const runtimeConfig = useRuntimeConfig()
-const {me, user: asd, loggedIn: qwe} = useA()
+const {me, loggedIn, logout} = useA()
 
 
 async function getWalletBalance() {
@@ -37,8 +37,6 @@ async function getEnsureWalletData() {
     method: 'GET',
   })
   console.log('getEnsureWalletData data:', data.value)
-  console.log('user:', asd)
-  console.log('loggedIn:', qwe)
 }
 
 
@@ -49,7 +47,7 @@ function onClick() {
   navigateTo('/login')
 }
 
-onMounted(getEnsureWalletData)
+// onMounted(getEnsureWalletData)
 
 const links = computed(() => {
   return [
@@ -57,12 +55,15 @@ const links = computed(() => {
       label: 'Home',
       to: '/'
     },
-    loggedIn
+    loggedIn.value
         ? {
           label: 'Admin',
           to: '/admin'
         }
-        : {}
+        : {
+          label: 'Login',
+          to: '/login'
+        }
   ]
 })
 

@@ -5,7 +5,7 @@ const useUserSessionState = () => useState<AuthPayload>('nuxt-mongoose-auth', ()
 export function useA() {
     const sessionState = useUserSessionState()
 
-    async function clear() {
+    async function logout() {
         await $fetch('/api/auth/logout', {method: 'DELETE'})
         useUserSessionState().value = {}
     }
@@ -17,7 +17,7 @@ export function useA() {
     return {
         loggedIn: computed(() => Boolean(sessionState.value?.email)),
         user: computed(() => sessionState.value || null),
-        clear,
+        logout,
         me,
     }
 }
